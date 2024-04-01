@@ -24,15 +24,6 @@
                     <a href="{{ route('agent.export') }}" class="btn btn-sm btn-dark mb-2 float-end"><i
                             class="fa-regular fa-file-excel"></i>&nbspExport</a>
 
-                    @if (session('success'))
-                        <div class="alert alert-success">
-                            {{ session('success') }}
-                        </div>
-                    @endif
-
-
-
-
 
                     <table class="table table-striped " id="agentTable">
                         <thead>
@@ -101,7 +92,8 @@
         </div>
     </div>
 
-    <div class="modal fade modal-lg" id="agentTrans" tabindex="-1" aria-labelledby="agentTransLabel" aria-hidden="true">
+    <div class="modal fade modal-lg" id="agentTrans" tabindex="-1" aria-labelledby="agentTransLabel"
+        aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -149,7 +141,7 @@
             $(document).ready(function() {
                 $('.btn-dark').click(function() {
                     var agentId = $(this).closest('tr').find('td:eq(1)')
-                .text(); // Get the agent ID from the table row
+                        .text(); // Get the agent ID from the table row
                     $.ajax({
                         url: 'agent/' + agentId, // Include '/transactions' in the URL
                         type: 'GET',
@@ -161,13 +153,20 @@
                             // Iterate over each transaction in the response and append to the table
                             $.each(response, function(index, transaction) {
                                 modalBody.append('<tr>' +
-                                    '<td class="border border-slate-600 px-1">' + (index + 1) + '</td>' +
-                                    '<td class="border border-slate-600 px-1">' + transaction.tansDate + '</td>' +
-                                    '<td class="border border-slate-600 px-1">' + transaction.user.number + '</td>' +
-                                    '<td class="border border-slate-600 px-1">' + transaction.transaction_type + '</td>' +
-                                    '<td class="border border-slate-600 px-1">' + transaction.transaction_id + '</td>' +
-                                    '<td class="border border-slate-600 px-1">' + transaction.amount + '</td>' +
-                                    '<td class="border border-slate-600 px-1">' + transaction.rate + '</td>' +
+                                    '<td class="border border-slate-600 px-1">' + (
+                                        index + 1) + '</td>' +
+                                    '<td class="border border-slate-600 px-1">' +
+                                    transaction.tansDate + '</td>' +
+                                    '<td class="border border-slate-600 px-1">' +
+                                    transaction.user.number + '</td>' +
+                                    '<td class="border border-slate-600 px-1">' +
+                                    transaction.transaction_type + '</td>' +
+                                    '<td class="border border-slate-600 px-1">' +
+                                    transaction.transaction_id + '</td>' +
+                                    '<td class="border border-slate-600 px-1">' +
+                                    transaction.amount + '</td>' +
+                                    '<td class="border border-slate-600 px-1">' +
+                                    transaction.rate + '</td>' +
                                     '</tr>');
                                 $('#agentTransLabel').text(transaction.user.name);
                             });
@@ -187,6 +186,8 @@
 
 
     </x-slot>
+
+
 
     <!-- Design by Md. Momen Uddin -->
 
@@ -222,6 +223,10 @@
         <x-input-label for="transaction_id" value="Transaction ID" />
         <x-text-input id="transaction_id" class="block mt-1 w-full" type="text" name="transaction_id"
             :value="old('transaction_id')" required autofocus />
+
+        <x-input-label for="rate" value="Rate" />
+        <x-text-input id="rate" class="block mt-1 w-full" type="text" name="rate"
+            :value="old('rate')" required autofocus />
 
         <x-input-label for="tansDate" value="Date" />
         @php

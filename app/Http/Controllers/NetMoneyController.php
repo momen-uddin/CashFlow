@@ -66,7 +66,7 @@ class NetMoneyController extends Controller
     }
 
     public function agentExport() {
-        return Excel::download(new UsersExport(), 'users.xlsx');
+        return Excel::download(new UsersExport(), 'Agent_transactions.xlsx');
     }
 
     public function getTransactions($id) {
@@ -98,6 +98,7 @@ class NetMoneyController extends Controller
             'transaction_type' => 'required',
             'transaction_id' => 'required',
             'tansDate' => 'required',
+            'rate' => 'required',
         ]);
 
         NetMoney::create($request->all());

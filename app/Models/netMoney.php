@@ -18,6 +18,7 @@ class netMoney extends Model
         'transaction_type',
         'transaction_id',
         'tansDate',
+        'rate',
     ];
 
     public function user()
