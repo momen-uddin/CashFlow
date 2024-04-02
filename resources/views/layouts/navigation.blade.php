@@ -24,6 +24,9 @@
                     <x-nav-link :href="route('admin.moneySent')" :active="request()->routeIs('admin.moneySent')">
                         {{ __('Money Sent to Customer') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('admin.moneyCollect')" :active="request()->routeIs('admin.moneyCollect')">
+                        {{ __('Money Recived') }}
+                    </x-nav-link>
                 </div>
             </div>
 

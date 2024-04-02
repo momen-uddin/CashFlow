@@ -128,6 +128,15 @@
 
     {{ $script }}
 
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#dataTable').DataTable({});
+
+        });
+    </script>
+
+    {{-- For Toaser Message --}}
+
     @if (Session::has('success'))
         <script>
             toastr.options = {
@@ -135,6 +144,16 @@
                 "progressBar": true
             }
             toastr.success("{!! Session::get('success') !!}");
+        </script>
+    @endif
+
+    @if (Session::has('error'))
+        <script>
+            toastr.options = {
+                "closeButton": true,
+                "progressBar": true
+            }
+            toastr.error("{!! Session::get('error') !!}");
         </script>
     @endif
 

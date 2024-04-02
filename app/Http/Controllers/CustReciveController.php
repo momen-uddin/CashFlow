@@ -30,12 +30,11 @@ class CustReciveController extends Controller
             ];
         });
 
-        $have = netMoney::get()->sum('amount');
 
 
 
         // Pass the combined information to the view
-        return view('moneySent', compact('combinedInfos', 'have'));
+        return view('moneySent', compact('combinedInfos'));
 
     }
 

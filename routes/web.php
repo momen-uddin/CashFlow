@@ -62,6 +62,9 @@ Route::middleware(['auth', 'admin'])->prefix("admin/")->group(function () {
 
     Route::get('moneySent', [CustReciveController::class, 'index'])->name('admin.moneySent');
     Route::post('moneySent', [CustSentController::class, 'store'])->name('addMoneyRecive');
+
+    Route::get('moneyCollect', [CustSentController::class, 'index'])->name('admin.moneyCollect');
+
 });
 
 // for agent
