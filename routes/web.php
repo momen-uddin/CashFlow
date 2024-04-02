@@ -7,6 +7,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\agentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\CustSentController;
 use App\Http\Controllers\NetMoneyController;
 use App\Http\Controllers\CustReciveController;
 use App\Http\Controllers\Auth\RegisteredUserController;
@@ -40,6 +41,7 @@ Route::middleware(['auth', 'admin'])->prefix("admin/")->group(function () {
     Route::get('dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
     // Route::get('agent', [NetMoneyController::class, 'index'])
     // ->name('agent.index');
+
     // agent route satart
     Route::get('agent', [NetMoneyController::class, 'agent'])
     ->name('agent');
@@ -47,7 +49,7 @@ Route::middleware(['auth', 'admin'])->prefix("admin/")->group(function () {
     ->name('agent.export');
 
     Route::get('agent/{id}', [NetMoneyController::class, 'getTransactions'])->name('agent.transactions');
-
+    Route::post('agent', [NetMoneyController::class, 'store'])->name('addAgentMoney');
 
     // agent route end
 
@@ -57,8 +59,9 @@ Route::middleware(['auth', 'admin'])->prefix("admin/")->group(function () {
 
     Route::post('register', [RegisteredUserController::class, 'store'])->name('register');
 
-    Route::post('agent', [NetMoneyController::class, 'store'])->name('addAgentMoney');
+
     Route::get('moneySent', [CustReciveController::class, 'index'])->name('admin.moneySent');
+    Route::post('moneySent', [CustSentController::class, 'store'])->name('addMoneyRecive');
 });
 
 // for agent

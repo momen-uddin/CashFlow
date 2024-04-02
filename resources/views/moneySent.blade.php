@@ -6,7 +6,7 @@
                 {{ __('Money Sent to Customer') }}
             </h2>
             <button type="button" class="btn btn-sm btn-dark bg-slate-600 mb-2" data-bs-toggle="modal"
-                data-bs-target="#pendingMoney">
+                data-bs-target="#addMoneyRecive">
                 Add Money Recieved
             </button>
         </div>
@@ -90,4 +90,55 @@
 </x-app-layout>
 
 <!-- Modal -->
+
+<x-i_modal title="Add Money Recive" id="addMoneyRecive">
+
+    <form action="{{ route('addMoneyRecive') }}" method="POST">
+        @csrf
+        <x-input-label for="agent_name" value="Customer name" />
+
+        <select class="form-select" aria-label="Default select example" name="cust_id">
+            <option selected>Customer Name</option>
+
+            @php
+                $data = DB::table('users')->where('role', 'Customer')->get();
+            @endphp
+
+            @foreach ($data as $name)
+                <option value="{{ $name->id }}">{{ $name->name }}</option>
+            @endforeach
+        </select>
+
+        <x-input-label for="amount" value="Amount" />
+        <x-text-input id="amount" class="block mt-1 w-full" type="text" name="amount" :value="old('amount')" required
+            autofocus />
+
+        <x-input-label for="transaction_type" value="Transaction Type" />
+        <x-text-input id="transaction_type" class="block mt-1 w-full" type="text" name="transaction_type"
+            :value="old('transaction_type')" required autofocus />
+
+        <x-input-label for="transaction_id" value="Transaction ID" />
+        <x-text-input id="transaction_id" class="block mt-1 w-full" type="text" name="transaction_id"
+            :value="old('transaction_id')" required autofocus />
+
+        <x-input-label for="rate" value="Rate" />
+        <x-text-input id="rate" class="block mt-1 w-full" type="text" name="rate"
+            :value="old('rate')" required autofocus />
+
+        <x-input-label for="transDate" value="Date" />
+        @php
+            date_default_timezone_set('Asia/Dhaka');
+            $date = date('Y-m-d H:i:s');
+        @endphp
+        <x-text-input id="transDate" class="block mt-1 w-full" type="text" name="transDate" :value="$date"
+            required autofocus />
+
+
+
+        <input type="submit" value="Insert" class="btn btn-sm btn-dark bg-slate-600 mt-1 mb-1 float-end">
+    </form>
+
+</x-i_modal>
+
+
 <!-- Design by Md. Momen Uddin -->

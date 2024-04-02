@@ -195,7 +195,7 @@
 <!-- Design by Md. Momen Uddin -->
 <!-- Modal -->
 
-<x-i_modal title="Add Agent" id="agent">
+<x-i_modal title="Add Agent Money" id="agent">
     <form action="{{ route('addAgentMoney') }}" method="POST">
         @csrf
         <x-input-label for="agent_name" value="Agent name" />

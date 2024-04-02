@@ -16,6 +16,7 @@ class CustSents extends Model
         'transaction_type',
         'transaction_id',
         'transDate',
+        'rate',
     ];
 
     public function user()
