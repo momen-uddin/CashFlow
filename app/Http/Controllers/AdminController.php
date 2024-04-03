@@ -8,6 +8,7 @@ use App\Models\netMoney;
 use App\Models\CustSents;
 use App\Models\CustReceive;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
@@ -35,12 +36,15 @@ class AdminController extends Controller
         $custSentData = [];
         $custReceiveData = [];
 
+
         foreach ($monthlyData as $month => $data) {
             $labels[] = DateTime::createFromFormat('!m', $month)->format('F'); // Convert month number to month name
             $agentData[] = $data['Agent'];
             $custSentData[] = $data['CustSent'];
             $custReceiveData[] = $data['CustReceive'];
         }
+
+
 
         $chartData = [
             'labels' => $labels,
@@ -69,8 +73,19 @@ class AdminController extends Controller
             ],
         ];
 
+        $transactions = DB::table('cust_receives')
+            ->select('cust_receives.id', 'cust_receives.cust_id', 'users.name as cust_name', 'cust_receives.amount', 'cust_receives.transDate')
+            ->join('users', 'cust_receives.cust_id', '=', 'users.id')
+            // ->where('cust_receives.transDate', '>=', now()->startOfWeek())
+            // ->where('cust_receives.transDate', '<=', now()->endOfWeek())
+            ->orderByDesc('cust_receives.transDate')
+            ->limit(7)
+            ->get();
 
 
-        return view('dashboard', compact('Agent', 'CustSent', 'CustReceive', 'chartData'));
+
+        // dd($transactions);
+
+        return view('dashboard', compact('Agent', 'CustSent', 'CustReceive', 'chartData', 'transactions'));
     }
 }

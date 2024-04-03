@@ -40,6 +40,7 @@
     <!-- Chart.js library -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+
     <style>
         * {
             margin: 0;
