@@ -86,6 +86,9 @@
                                 <hr>
                             @endforeach
                         </ul>
+                        {{-- <div class="d-flex justify-center items-center mt-2">
+                            <a href="{{ route('admin.moneySent') }}" class="btn btn-sm btn-dark ">View All</a>
+                        </div> --}}
                     </div>
                 </div>
             </div>

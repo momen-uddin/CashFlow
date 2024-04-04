@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\agentController;
+use App\Http\Controllers\AirtelController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CustSentController;
@@ -12,6 +13,9 @@ use App\Http\Controllers\NetMoneyController;
 use App\Http\Controllers\CustReciveController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\BanglalinkController;
+use App\Http\Controllers\GrameenController;
+use App\Http\Controllers\RobiController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -64,6 +68,18 @@ Route::middleware(['auth', 'admin'])->prefix("admin/")->group(function () {
     Route::post('moneySent', [CustSentController::class, 'store'])->name('addMoneyRecive');
 
     Route::get('moneyCollect', [CustSentController::class, 'index'])->name('admin.moneyCollect');
+
+    // Telecome route start
+    Route::get('airtel', [AirtelController::class, 'index'])->name('airtel');
+    Route::get('robi', [RobiController::class, 'index'])->name('robi');
+    Route::get('grameen', [GrameenController::class, 'index'])->name('grameen');
+    Route::get('banglalink', [BanglalinkController::class, 'index'])->name('banglalink');
+
+    Route::post('airtel', [AirtelController::class, 'store'])->name('addAirtel');
+    Route::post('robi', [RobiController::class, 'store'])->name('addRobi');
+    Route::post('grameen', [GrameenController::class, 'store'])->name('addGrameen');
+    Route::post('banglalink', [BanglalinkController::class, 'store'])->name('addBanglalink');
+    // Telecome route end
 
 });
 
