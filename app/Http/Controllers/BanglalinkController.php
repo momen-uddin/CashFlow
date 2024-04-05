@@ -9,7 +9,9 @@ class BanglalinkController extends Controller
 {
     public function index()
     {
-        return view('telecom.banglalink');
+        $banglalink = Banglalink::all();
+
+        return view('telecom.banglalink', compact('banglalink'));
     }
 
     public function store(Request $request)

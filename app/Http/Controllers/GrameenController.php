@@ -9,7 +9,10 @@ class GrameenController extends Controller
 {
     public function index()
     {
-        return view('telecom.grameen');
+        $grameen = Grameen::all();
+
+        return view('telecom.grameen', compact('grameen'));
+
     }
     public function store(Request $request)
     {

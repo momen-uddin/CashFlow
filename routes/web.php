@@ -3,23 +3,23 @@
 use App\Http\Middleware\Customer;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\RobiController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\agentController;
 use App\Http\Controllers\AirtelController;
+use App\Http\Controllers\GrameenController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CustSentController;
 use App\Http\Controllers\NetMoneyController;
+use App\Http\Controllers\BanglalinkController;
 use App\Http\Controllers\CustReciveController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\BanglalinkController;
-use App\Http\Controllers\GrameenController;
-use App\Http\Controllers\RobiController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');

@@ -8,8 +8,12 @@ use Illuminate\Http\Request;
 class AirtelController extends Controller
 {
     public function index()
+
     {
-        return view('telecom.airtel');
+
+        $airtel = Airtel::all();
+
+        return view('telecom.airtel', compact('airtel'));
     }
     public function store(Request $request)
     {
@@ -20,6 +24,8 @@ class AirtelController extends Controller
             'validity' => 'required|numeric',
             'offerEndsIn' => 'numeric'
         ]);
+
+        date_default_timezone_set('Asia/Dhaka');
 
         $airtel = new Airtel();
         $airtel->packName = $request->packName;

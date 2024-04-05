@@ -9,7 +9,9 @@ class RobiController extends Controller
 {
     public function index()
     {
-        return view('telecom.robi');
+        $robi = Robi::all();
+
+        return view('telecom.robi', compact('robi'));
     }
     public function store(Request $request)
     {
