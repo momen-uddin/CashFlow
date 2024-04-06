@@ -35,6 +35,7 @@
                                 <th class="border border-slate-600 px-1">E-mail</th>
                                 <th class="border border-slate-600 px-1">Amount</th>
                                 <th class="border border-slate-600 px-1">Transections</th>
+                                <th class="border border-slate-600 px-1">Action</th>
 
                             </tr>
 
@@ -49,11 +50,24 @@
                                 <tr>
                                     <td class="border border-slate-600 px-1">{{ ++$sn }}</td>
                                     <td class="border border-slate-600 px-1">{{ $info['agent_id'] }}</td>
-                                    <td class="border border-slate-600 px-1">{{ $info['agent'] }}</td>
-                                    <td class="border border-slate-600 px-1">{{ $info['number'] }}</td>
-                                    <td class="border border-slate-600 px-1">{{ $info['email'] }}</td>
                                     <td class="border border-slate-600 px-1">
-                                        {{ $info['total_money'] }} Taka</td>
+
+                                        <input type="text" class="form-control edit-field border-0"
+                                            value="{{ $info['agent'] }}" name="name">
+                                    </td>
+                                    <td class="border border-slate-600 px-1">
+
+                                        <input type="text" class="form-control border-0 edit-field"
+                                            value="{{ $info['number'] }}" name="number">
+                                    </td>
+                                    <td class="border border-slate-600 px-1">
+
+                                        <input type="text" class="form-control edit-field border-0"
+                                            value="{{ $info['email'] }}" name="email">
+                                    </td>
+                                    <td class="border border-slate-600 px-1">
+                                        {{ $info['total_money'] }} Taka
+                                    </td>
 
                                     <td class="border border-slate-600 px-1">
                                         <button type="button" class="btn btn-sm btn-dark bg-slate-800 mb-2"
@@ -61,10 +75,16 @@
                                             Transections
                                         </button>
                                     </td>
+                                    <td class="border border-slate-600 px-1">
+
+
+                                        <button type="button" class="btn btn-sm bg-dark text-lime-50 hover:text-[#ffe65b] update-field-btn"
+                                            >Update</button>
+                                    </td>
+
                                     @php
                                         $totalMoney += $info['total_money'];
                                     @endphp
-
                                 </tr>
                             @endforeach
 
@@ -78,7 +98,7 @@
 
                             <td colspan="5" class="border border-slate-600 px-1" style="text-align: right;">Grand
                                 total</td>
-                            <td colspan="2"
+                            <td colspan="3"
                                 class="border border-slate-600 px-1
                              {{ $totalMoney < 0 ? 'bg-red-300' : '' }}">
                                 {{ $totalMoney }} Taka</td>
@@ -184,6 +204,9 @@
             });
         </script>
 
+        {{-- Update script --}}
+
+
 
     </x-slot>
 
@@ -213,8 +236,8 @@
         </select>
 
         <x-input-label for="amount" value="Amount" />
-        <x-text-input id="amount" class="block mt-1 w-full" type="text" name="amount" :value="old('amount')" required
-            autofocus />
+        <x-text-input id="amount" class="block mt-1 w-full" type="text" name="amount" :value="old('amount')"
+            required autofocus />
 
         <x-input-label for="transaction_type" value="Transaction Type" />
         <x-text-input id="transaction_type" class="block mt-1 w-full" type="text" name="transaction_type"
@@ -225,8 +248,8 @@
             :value="old('transaction_id')" required autofocus />
 
         <x-input-label for="rate" value="Rate" />
-        <x-text-input id="rate" class="block mt-1 w-full" type="text" name="rate"
-            :value="old('rate')" required autofocus />
+        <x-text-input id="rate" class="block mt-1 w-full" type="text" name="rate" :value="old('rate')"
+            required autofocus />
 
         <x-input-label for="tansDate" value="Date" />
         @php

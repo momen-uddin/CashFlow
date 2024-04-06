@@ -24,6 +24,8 @@
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
+        <input type="hidden" name="otp_verification" value="1">
+
         <!-- Remember Me -->
         <div class="block mt-4">
             <label for="remember_me" class="inline-flex items-center">

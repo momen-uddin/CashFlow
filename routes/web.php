@@ -3,6 +3,7 @@
 use App\Http\Middleware\Customer;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\OtpController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RobiController;
 use App\Http\Controllers\AdminController;
@@ -49,8 +50,6 @@ Route::middleware(['auth', 'admin'])->prefix("admin/")->group(function () {
     // agent route satart
     Route::get('agent', [NetMoneyController::class, 'agent'])
     ->name('agent');
-    Route::get('agent/export', [NetMoneyController::class, 'agentExport'])
-    ->name('agent.export');
 
     Route::get('agent/{id}', [NetMoneyController::class, 'getTransactions'])->name('agent.transactions');
     Route::post('agent', [NetMoneyController::class, 'store'])->name('addAgentMoney');
@@ -81,6 +80,17 @@ Route::middleware(['auth', 'admin'])->prefix("admin/")->group(function () {
     Route::post('banglalink', [BanglalinkController::class, 'store'])->name('addBanglalink');
     // Telecome route end
 
+    // export route start
+
+    Route::get('agent/export', [NetMoneyController::class, 'agentExport'])
+    ->name('agent.export');
+
+    Route::get('moneySent/export', [AdminController::class, 'moneySent_Export'])
+    ->name('admin.moneySentExport');
+    Route::get('moneyCollect/export', [AdminController::class, 'moneyRecive_Export'])
+    ->name('admin.moneyReciveExport');
+
+
 });
 
 // for agent
@@ -108,6 +118,20 @@ Route::middleware(['auth', 'customer'])->group(function () {
     Route::post('moneyCollect/update', [CustReciveController::class, 'updateMoney'])->name('updateMoney');
 
 });
+
+// otp route
+
+// Route for sending OTP
+// Route::post('/send-otp', [OtpController::class, 'sendOtp'])->name('sendOtp');
+
+// Route for OTP verification form
+Route::get('/verify-otp', function () {
+    return view('auth.otp');
+})->name('otp.verify');
+
+// Route for OTP verification
+Route::post('/verify-otp', [OtpController::class, 'verifyOtp'])->name('verifyOtp');
+
 
 
 

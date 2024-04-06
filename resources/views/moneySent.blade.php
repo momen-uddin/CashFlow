@@ -9,6 +9,9 @@
                 data-bs-target="#addMoneyRecive">
                 Add Money Recieved
             </button>
+            <a href="{{ route('admin.moneySentExport') }}" class="btn btn-sm btn-dark ml-2 mb-2 float-end"><i
+                    class="fa-regular fa-file-excel"></i>&nbspExport</a>
+
         </div>
     </x-slot>
 
@@ -19,7 +22,7 @@
                 <div class="p-6 text-gray-900 auto-cols-auto flex-row justify-items-start justify-between ">
 
 
-                    <table class="table-auto border-separate border border-slate-500 ">
+                    <table class="table-auto border-separate border border-slate-500 " id="dataTable">
                         <thead>
                             <tr>
                                 <th class="border border-slate-600 px-3">#</th>
@@ -51,8 +54,7 @@
                                     <td class="border border-slate-600 px-3">{{ $info['trans_type'] }}</td>
                                     <td class="border border-slate-600 px-3">{{ $info['trans_id'] }}</td>
 
-                                    <td
-                                        class="border border-slate-600 px-3">
+                                    <td class="border border-slate-600 px-3">
                                         {{ $info['amount'] }} Taka</td>
 
                                     @php
@@ -61,14 +63,16 @@
 
                                 </tr>
                             @endforeach
-                            <tr>
-                                <td colspan="7" class="border border-slate-600 px-3" style="text-align: right;">
-                                    Total Sent </td>
-                                <td class="border border-slate-600 px-3
-                                 {{ ($totalMoney <= 0) ? 'bg-red-300' : '' }}">{{ $totalMoney }} Taka</td>
-                            </tr>
 
                         </tbody>
+                        <tr>
+                            <td colspan="7" class="border border-slate-600 px-3" style="text-align: right;">
+                                Total Sent </td>
+                            <td
+                                class="border border-slate-600 px-3
+                             {{ $totalMoney <= 0 ? 'bg-red-300' : '' }}">
+                                {{ $totalMoney }} Taka</td>
+                        </tr>
                     </table>
                     {{-- {{$pendingMoneys}} --}}
                 </div>
@@ -110,8 +114,8 @@
             :value="old('transaction_id')" required autofocus />
 
         <x-input-label for="rate" value="Rate" />
-        <x-text-input id="rate" class="block mt-1 w-full" type="text" name="rate"
-            :value="old('rate')" required autofocus />
+        <x-text-input id="rate" class="block mt-1 w-full" type="text" name="rate" :value="old('rate')" required
+            autofocus />
 
         <x-input-label for="transDate" value="Date" />
         @php

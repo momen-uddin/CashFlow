@@ -8,7 +8,13 @@ use App\Models\netMoney;
 use App\Models\CustSents;
 use App\Models\CustReceive;
 use Illuminate\Http\Request;
+use App\Exports\MoneySentExport;
+use App\Exports\MoneyReciveExport;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Notifications\AdminNotification;
 
 class AdminController extends Controller
 {
@@ -57,14 +63,14 @@ class AdminController extends Controller
                     'borderWidth' => 1,
                 ],
                 [
-                    'label' => 'Customer Sent',
+                    'label' => 'Sent to Customer',
                     'data' => $custSentData,
                     'backgroundColor' => 'rgba(54, 162, 235, 0.2)',
                     'borderColor' => 'rgba(54, 162, 235, 1)',
                     'borderWidth' => 1,
                 ],
                 [
-                    'label' => 'Customer Received',
+                    'label' => 'Received from Customer',
                     'data' => $custReceiveData,
                     'backgroundColor' => 'rgba(75, 192, 192, 0.2)',
                     'borderColor' => 'rgba(75, 192, 192, 1)',
@@ -87,5 +93,25 @@ class AdminController extends Controller
         // dd($transactions);
 
         return view('dashboard', compact('Agent', 'CustSent', 'CustReceive', 'chartData', 'transactions'));
+    }
+
+    public function moneySent_Export() {
+
+        //sent email to the admin
+
+        // $email = "stareye714@gmail.com";
+        // $msg = "Money Sent Transaction Exported Successfully";
+        // Notification::route('mail', $email)->notify(new AdminNotification($msg));
+
+
+        return Excel::download(new MoneySentExport(), 'MoneySent_transactions.xlsx');
+
+        // return Excel::download(new UsersExport(), 'Agent_transactions.xlsx');
+    }
+    public function moneyRecive_Export() {
+
+        return Excel::download(new MoneyReciveExport(), 'MoneyRecive_transactions.xlsx');
+
+        // return Excel::download(new UsersExport(), 'Agent_transactions.xlsx');
     }
 }

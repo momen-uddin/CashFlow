@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Notifications\OtpNotification;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Foundation\Support\Providers\RouteServiceProvider;
 
 class LoginController extends Controller
 {
@@ -19,6 +23,7 @@ class LoginController extends Controller
     */
 
     use AuthenticatesUsers;
+
 
     /**
      * Where to redirect users after login.

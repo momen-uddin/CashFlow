@@ -9,6 +9,8 @@
                 data-bs-target="#addMoneyRecive">
                 Add Money Recieved
             </button>
+            <a href="{{ route('admin.moneyReciveExport') }}" class="btn btn-sm btn-dark ml-2 mb-2 float-end"><i
+                class="fa-regular fa-file-excel"></i>&nbspExport</a>
         </div>
     </x-slot>
 

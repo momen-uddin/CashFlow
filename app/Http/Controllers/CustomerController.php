@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Exports\UsersExport;
 use Illuminate\Http\Request;
+use App\Exports\MoneySentExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CustomerController extends Controller
 {
@@ -26,4 +29,6 @@ class CustomerController extends Controller
         // return $dataTable->render('customers');
 
     }
+
+
 }
