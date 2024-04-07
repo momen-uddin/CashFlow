@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use App\Jobs\SendOtpEmail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
@@ -21,7 +22,7 @@ class Customer
     {
 
 
-        if ($request->session()->get('otpVerificaton') !== '1') {
+        if ($request->session()->get('otpVerificaton') == '1') {
             if (Auth::check() && (Auth::user()->role !== 'Customer')) {
 
                 abort(401, 'Unauthorized');
@@ -30,10 +31,9 @@ class Customer
             $otp = rand(1000, 9999);
             $request->session()->put('otp', $otp);
 
-            $message = "Your OTP is: " . $otp;
             // send otp to email
             $email = $request->session()->get('email');
-            Notification::route('mail', $email)->notify(new OtpNotification($message));
+            SendOtpEmail::dispatch($email, $otp);
 
             return redirect()->route('otp.verify')->with('error', 'Verify your OTP first');
         }

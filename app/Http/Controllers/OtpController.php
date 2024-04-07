@@ -25,7 +25,8 @@ class OtpController extends Controller
     public function verifyOtp(Request $request)
     {
         if ($request->otp == $request->session()->get('otp')) {
-            return redirect()->route('home')->with('otpVerificaton', '1');
+            $request->session()->put('otpVerificaton', '1');
+            return redirect()->route('home');
         } else {
             return redirect()->route('otp.verify')->with('error', 'Invalid OTP');
         }

@@ -36,7 +36,7 @@ class OtpNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-                    ->line('OTP.')
+                    ->subject('OTP Verification')
                     ->line($this->message)
                     ->line('Thank you for using our application!');
     }

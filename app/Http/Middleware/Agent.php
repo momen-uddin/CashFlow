@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use App\Jobs\SendOtpEmail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Notifications\OtpNotification;
@@ -20,7 +21,7 @@ class Agent
     {
 
 
-        if ($request->session()->get('otpVerificaton') !== '1') {
+        if ($request->session()->get('otpVerificaton') == '1') {
             if (Auth::user()->role != 'Agent') {
                 // Auth::logout();
                 // return redirect()->route('login')->with('error', 'You are not authorized to access this page');
@@ -30,10 +31,9 @@ class Agent
             $otp = rand(1000, 9999);
             $request->session()->put('otp', $otp);
 
-            $message = "Your OTP is: " . $otp;
             // send otp to email
             $email = $request->session()->get('email');
-            Notification::route('mail', $email)->notify(new OtpNotification($message));
+            SendOtpEmail::dispatch($email, $otp);
 
             return redirect()->route('otp.verify')->with('error', 'Verify your OTP first');
         }

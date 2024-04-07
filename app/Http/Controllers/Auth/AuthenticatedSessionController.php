@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use Illuminate\View\View;
+use App\Jobs\SendOtpEmail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
@@ -34,11 +35,13 @@ class AuthenticatedSessionController extends Controller
             $otp = rand(1000, 9999);
             $request->session()->put('otp', $otp);
 
-            $message = "Your OTP is: " . $otp;
+            // $message = "Your OTP is: " . $otp;
             // send otp to email
             $email = $request->email;
             $request->session()->put('email', $email);
-            Notification::route('mail', $email)->notify(new OtpNotification($message));
+
+            SendOtpEmail::dispatch($request->email, $otp);
+
             return redirect()->route('otp.verify');
         }
 
