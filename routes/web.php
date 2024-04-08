@@ -54,14 +54,20 @@ Route::middleware(['auth', 'admin'])->prefix("admin/")->group(function () {
     Route::get('agent/{id}', [NetMoneyController::class, 'getTransactions'])->name('agent.transactions');
     Route::post('agent', [NetMoneyController::class, 'store'])->name('addAgentMoney');
 
+    Route::post('agent/update', [agentController::class, 'update'])->name('agent.update');
+
+
     // agent route end
 
     Route::get('customer', [CustomerController::class, 'showAll'])
     ->name('customers');
 
-
     Route::post('register', [RegisteredUserController::class, 'store'])->name('register');
 
+    Route::post('customer/update', [RegisteredUserController::class, 'store'])->name('customer.update');
+
+    Route::get('customer', [CustomerController::class, 'showAll'])
+    ->name('customers');
 
     Route::get('moneySent', [CustReciveController::class, 'index'])->name('admin.moneySent');
     Route::post('moneySent', [CustSentController::class, 'store'])->name('addMoneyRecive');
@@ -75,9 +81,17 @@ Route::middleware(['auth', 'admin'])->prefix("admin/")->group(function () {
     Route::get('banglalink', [BanglalinkController::class, 'index'])->name('banglalink');
 
     Route::post('airtel', [AirtelController::class, 'store'])->name('addAirtel');
+    Route::delete('airtel/delete/{id}', [AirtelController::class, 'delete'])->name('deleteAirtel');
+
     Route::post('robi', [RobiController::class, 'store'])->name('addRobi');
+    Route::delete('robi/delete/{id}', [RobiController::class, 'delete'])->name('deleteRobi');
+
+
     Route::post('grameen', [GrameenController::class, 'store'])->name('addGrameen');
+    Route::delete('grameen/delete/{id}', [GrameenController::class, 'delete'])->name('deleteGrameen');
+
     Route::post('banglalink', [BanglalinkController::class, 'store'])->name('addBanglalink');
+    Route::delete('banglalink/delete/{id}', [BanglalinkController::class, 'delete'])->name('deleteBanglalink');
     // Telecome route end
 
     // export route start

@@ -4,7 +4,7 @@
             <h2 class="font-semibold text-xl text-gray-800 leading-tight flex-grow-1">
                 {{ __('Banglalink') }}
             </h2>
-            <button type="button" class="btn btn-sm bg-[#e96c41] hover:bg-[#f69274] mb-2" data-bs-toggle="modal"
+            <button type="button" class="btn btn-sm bg-[#e96c41] hover:bg-[#f69274] mb-2 text-white hover:text-black" data-bs-toggle="modal"
                 data-bs-target="#addPack">
                 Add Package
             </button>
@@ -18,25 +18,34 @@
                     <table class="table table-striped table-secondary" id="dataTable">
                         <thead>
                             <tr>
+                                <th>#</th>
                                 <th>Package Name</th>
                                 <th>Title</th>
                                 <th>Price</th>
                                 <th>Validity</th>
-                                {{-- <th>Action</th> --}}
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
+                            @php
+                                $sn = 1;
+                            @endphp
                             @foreach ($banglalink as $data)
                                 <tr>
+                                    <td>{{ $sn++ }}</td>
                                     <td>{{ $data->packName }}</td>
                                     <td>{{ $data->title }}</td>
                                     <td>{{ $data->price }}</td>
 
                                     <td>{{ $data->validity == 0 ? 'Unlimited' : $data->validity }}</td>
-                                    {{-- <td>
-                                        <a href="{{ route('editAirtel', $data->id) }}" class="btn btn-sm btn-dark bg-slate-600">Edit</a>
-                                        <a href="{{ route('deleteAirtel', $data->id) }}" class="btn btn-sm btn-dark bg-slate-600">Delete</a>
-                                    </td> --}}
+                                    <td>
+                                        <form action="{{ route('deleteBanglalink', ['id' => $data->id]) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit"
+                                                class="btn btn-sm btn-dark bg-slate-600">Delete</button>
+                                        </form>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>

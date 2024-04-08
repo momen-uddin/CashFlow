@@ -8,10 +8,10 @@ use Illuminate\Http\Request;
 class AirtelController extends Controller
 {
     public function index()
-
     {
 
-        $airtel = Airtel::all();
+        $airtel = Airtel::all()
+            ->sortByDesc('id');
 
         return view('telecom.airtel', compact('airtel'));
     }
@@ -44,8 +44,24 @@ class AirtelController extends Controller
             $message = "Airtel pack added failed";
             return redirect()->back()->with('error', $message);
         }
-
-
-
     }
+    public function delete(Request $request)
+    {
+        // $request->validate([
+        //     'id' => 'required'
+        // ]);
+
+        $airtel = Airtel::find($request->id);
+
+        if ($airtel) {
+            $airtel->delete();
+            $message = "Airtel pack deleted successfully";
+            return redirect()->back()->with('success', $message);
+        } else {
+            $message = "Airtel pack not found or deletion failed";
+            return redirect()->back()->with('error', $message);
+        }
+    }
+
+
 }

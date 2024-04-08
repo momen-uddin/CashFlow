@@ -48,45 +48,40 @@
                             @endphp
                             @foreach ($combinedInfos as $info)
                                 <tr>
-                                    <td class="border border-slate-600 px-1">{{ ++$sn }}</td>
-                                    <td class="border border-slate-600 px-1">{{ $info['agent_id'] }}</td>
-                                    <td class="border border-slate-600 px-1">
-
-                                        <input type="text" class="form-control edit-field border-0"
-                                            value="{{ $info['agent'] }}" name="name">
-                                    </td>
-                                    <td class="border border-slate-600 px-1">
-
-                                        <input type="text" class="form-control border-0 edit-field"
-                                            value="{{ $info['number'] }}" name="number">
-                                    </td>
-                                    <td class="border border-slate-600 px-1">
-
-                                        <input type="text" class="form-control edit-field border-0"
-                                            value="{{ $info['email'] }}" name="email">
-                                    </td>
-                                    <td class="border border-slate-600 px-1">
-                                        {{ $info['total_money'] }} Taka
-                                    </td>
-
-                                    <td class="border border-slate-600 px-1">
-                                        <button type="button" class="btn btn-sm btn-dark bg-slate-800 mb-2"
-                                            data-bs-toggle="modal" data-bs-target="#agentTrans">
-                                            Transections
-                                        </button>
-                                    </td>
-                                    <td class="border border-slate-600 px-1">
-
-
-                                        <button type="button" class="btn btn-sm bg-dark text-lime-50 hover:text-[#ffe65b] update-field-btn"
-                                            >Update</button>
-                                    </td>
-
-                                    @php
-                                        $totalMoney += $info['total_money'];
-                                    @endphp
+                                    <form action="{{ route('agent.update') }}" method="POST">
+                                        @csrf
+                                        <td class="border border-slate-600 px-1">{{ ++$sn }}</td>
+                                        <td class="border border-slate-600 px-1">{{ $info['agent_id'] }}</td>
+                                        <td class="border border-slate-600 px-1">
+                                            <input type="text" class="form-control border-0"
+                                                value="{{ $info['agent'] }}" name="name">
+                                        </td>
+                                        <td class="border border-slate-600 px-1">
+                                            <input type="text" class="form-control border-0"
+                                                value="{{ $info['number'] }}" name="number">
+                                        </td>
+                                        <td class="border border-slate-600 px-1">
+                                            <input type="text" class="form-control border-0"
+                                                value="{{ $info['email'] }}" name="email">
+                                        </td>
+                                        <td class="border border-slate-600 px-1">
+                                            {{ $info['total_money'] }} Taka
+                                        </td>
+                                        <td class="border border-slate-600 px-1">
+                                            <button type="button" class="btn btn-sm btn-dark bg-slate-800 mb-2"
+                                                data-bs-toggle="modal" data-bs-target="#agentTrans" id="trans">
+                                                Transections
+                                            </button>
+                                        </td>
+                                        <td class="border border-slate-600 px-1">
+                                            <input type="hidden" name="id" value="{{ $info['agent_id'] }}">
+                                            <button type="submit"
+                                                class="btn btn-sm btn-dark bg-slate-600 mb-2">Update</button>
+                                        </td>
+                                    </form>
                                 </tr>
                             @endforeach
+
 
 
                         </tbody>
@@ -159,7 +154,7 @@
 
         <script type="text/javascript">
             $(document).ready(function() {
-                $('.btn-dark').click(function() {
+                $('#trans').click(function() {
                     var agentId = $(this).closest('tr').find('td:eq(1)')
                         .text(); // Get the agent ID from the table row
                     $.ajax({
@@ -203,8 +198,6 @@
                 });
             });
         </script>
-
-        {{-- Update script --}}
 
 
 

@@ -9,7 +9,8 @@ class BanglalinkController extends Controller
 {
     public function index()
     {
-        $banglalink = Banglalink::all();
+        $banglalink = Banglalink::all()
+            ->sortByDesc('id');
 
         return view('telecom.banglalink', compact('banglalink'));
     }
@@ -43,5 +44,19 @@ class BanglalinkController extends Controller
             return redirect()->back()->with('error', $message);
         }
 
+    }
+
+    public function delete(Request $request)
+    {
+        $banglalink = Banglalink::find($request->id);
+
+        if ($banglalink) {
+            $banglalink->delete();
+            $message = "Banglalink pack deleted successfully";
+            return redirect()->back()->with('success', $message);
+        } else {
+            $message = "Banglalink pack not found or deletion failed";
+            return redirect()->back()->with('error', $message);
+        }
     }
 }

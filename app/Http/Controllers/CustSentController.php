@@ -10,6 +10,7 @@ class CustSentController extends Controller
     public function index()
     {
         $combinedInfos = CustSents::with(['user'])
+        ->orderByDesc('id')
         ->get()->map(function ($item) {
             return [
                 'cust_name' => $item->user->name,

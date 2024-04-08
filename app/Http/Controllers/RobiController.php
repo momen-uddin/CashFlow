@@ -9,7 +9,8 @@ class RobiController extends Controller
 {
     public function index()
     {
-        $robi = Robi::all();
+        $robi = Robi::all()
+            ->sortByDesc('id');
 
         return view('telecom.robi', compact('robi'));
     }
@@ -42,5 +43,18 @@ class RobiController extends Controller
             return redirect()->back()->with('error', $message);
         }
 
+    }
+
+    public function delete(Request $request) {
+        $robi = Robi::find($request->id);
+
+        if ($robi) {
+            $robi->delete();
+            $message = "Robi pack deleted successfully";
+            return redirect()->back()->with('success', $message);
+        } else {
+            $message = "Robi pack not found or deletion failed";
+            return redirect()->back()->with('error', $message);
+        }
     }
 }

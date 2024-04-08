@@ -18,25 +18,34 @@
                     <table class="table table-striped table-secondary" id="dataTable">
                         <thead>
                             <tr>
+                                <th>#</th>
                                 <th>Package Name</th>
                                 <th>Title</th>
                                 <th>Price</th>
                                 <th>Validity</th>
-                                {{-- <th>Action</th> --}}
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
+                            @php
+                                $sn = 1;
+                            @endphp
                             @foreach ($robi as $data)
                                 <tr>
+                                    <td>{{ $sn++ }}</td>
                                     <td>{{ $data->packName }}</td>
                                     <td>{{ $data->title }}</td>
                                     <td>{{ $data->price }}</td>
 
                                     <td>{{ $data->validity == 0 ? 'Unlimited' : $data->validity }}</td>
-                                    {{-- <td>
-                                        <a href="{{ route('editAirtel', $data->id) }}" class="btn btn-sm btn-dark bg-slate-600">Edit</a>
-                                        <a href="{{ route('deleteAirtel', $data->id) }}" class="btn btn-sm btn-dark bg-slate-600">Delete</a>
-                                    </td> --}}
+                                    <td>
+                                        <form action="{{ route('deleteRobi', ['id' => $data->id]) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit"
+                                                class="btn btn-sm btn-dark bg-slate-600">Delete</button>
+                                        </form>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>

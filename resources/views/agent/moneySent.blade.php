@@ -48,8 +48,7 @@
                                     <td class="border border-slate-600 px-3">{{ $info['trans_type'] }}</td>
                                     <td class="border border-slate-600 px-3">{{ $info['trans_id'] }}</td>
 
-                                    <td
-                                        class="border border-slate-600 px-3">
+                                    <td class="border border-slate-600 px-3">
                                         {{ $info['amount'] }} Taka</td>
                                     @php
                                         $totalMoney += $info['amount'];
@@ -60,20 +59,28 @@
                             <tr>
                                 <td colspan="6" class="border border-slate-600 px-3" style="text-align: right;">
                                     Total Sent</td>
-                                <td class="border border-slate-600 px-3
-                                 {{ ($totalMoney <= 0) ? 'bg-red-300' : '' }}">{{ $totalMoney }} Taka</td>
+                                <td
+                                    class="border border-slate-600 px-3
+                                 {{ $totalMoney <= 0 ? 'bg-red-300' : '' }}">
+                                    {{ $totalMoney }} Taka</td>
                             </tr>
                             <tr>
-                                <td colspan="6" class="border border-slate-600 px-3" style="text-align: right;">Total Have
-                                    </td>
-                                <td class="border border-slate-600 px-3
-                                 {{ ($have <= 0) ? 'bg-red-300' : '' }}">{{ $have }} Taka</td>
+                                <td colspan="6" class="border border-slate-600 px-3" style="text-align: right;">Total
+                                    Have
+                                </td>
+                                <td
+                                    class="border border-slate-600 px-3
+                                 {{ $have <= 0 ? 'bg-red-300' : '' }}">
+                                    {{ $have }} Taka</td>
                             </tr>
                             <tr>
-                                <td colspan="6" class="border border-slate-600 px-3" style="text-align: right;">Net Amount
-                                    </td>
-                                <td class="border border-slate-600 px-3
-                                 {{ (($have - $totalMoney) <= 0) ? 'bg-red-300' : '' }}">{{ $have - $totalMoney }} Taka</td>
+                                <td colspan="6" class="border border-slate-600 px-3" style="text-align: right;">Net
+                                    Amount
+                                </td>
+                                <td
+                                    class="border border-slate-600 px-3
+                                 {{ $have - $totalMoney <= 0 ? 'bg-red-300' : '' }}">
+                                    {{ $have - $totalMoney }} Taka</td>
                             </tr>
 
                         </tbody>
@@ -87,7 +94,8 @@
 
 <!-- Modal -->
 
-<div class="modal fade modal-xl" id="pendingMoney" tabindex="-1" aria-labelledby="pendingMoneyLabel" aria-hidden="true">
+<div class="modal fade modal-xl" id="pendingMoney" tabindex="-1" aria-labelledby="pendingMoneyLabel"
+    aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -118,32 +126,36 @@
                                 <form action="{{ route('agent.approveMoneySent') }}" method="POST">
                                     @csrf
 
-                                <td class="border border-slate-600 px-3">{{ ++$sn }}</td>
-                                <td class="border border-slate-600 px-3">{{ custom_date($pendingMoney['transDate']) }}</td>
-                                <td class="border border-slate-600 px-3">{{ $pendingMoney['cust_name'] }}</td>
-                                <td class="border border-slate-600 px-3">{{ $pendingMoney['cust_number'] }}</td>
-                                <td class="border border-slate-600 px-3">
-                                    {{-- <input type="text" class="border-0 p-0 w-100" name="trans_type" value="{{ $pendingMoney['trans_type'] }}"> --}}
-                                    <select name="trans_type" id="trans_type" class="border-0 p-0 w-100">
-                                        <option value="bKash">bKash</option>
-                                        <option value="Rocket">Rocket</option>
-                                        <option value="Nagad">Nagad</option>
-                                    </select>
-                                </td>
-                                <td class="border border-slate-600 px-3">
-                                    <input type="text" class="border-0 p-0 w-100" name="trans_id" value="{{ $pendingMoney['trans_id'] }}">
-                                </td>
+                                    <td class="border border-slate-600 px-3">{{ ++$sn }}</td>
+                                    <td class="border border-slate-600 px-3">
+                                        {{ custom_date($pendingMoney['transDate']) }}</td>
+                                    <td class="border border-slate-600 px-3">{{ $pendingMoney['cust_name'] }}</td>
+                                    <td class="border border-slate-600 px-3">{{ $pendingMoney['cust_number'] }}</td>
+                                    <td class="border border-slate-600 px-3">
+                                        {{-- <input type="text" class="border-0 p-0 w-100" name="trans_type" value="{{ $pendingMoney['trans_type'] }}"> --}}
+                                        <select name="trans_type" id="trans_type" class="border-0 p-0 w-100">
+                                            <option value="bKash">bKash</option>
+                                            <option value="Rocket">Rocket</option>
+                                            <option value="Nagad">Nagad</option>
+                                        </select>
+                                    </td>
+                                    <td class="border border-slate-600 px-3">
+                                        <input type="text" class="border-0 p-0 w-100" name="trans_id"
+                                            value="{{ $pendingMoney['trans_id'] }}">
+                                    </td>
 
-                                <td class="border border-slate-600 px-3">
+                                    <td class="border border-slate-600 px-3">
 
-                                    <input type="text" class="border-0 p-0 w-100" name="amount" value="{{ $pendingMoney['amount'] }}">
+                                        <input type="text" class="border-0 p-0 w-100" name="amount"
+                                            value="{{ $pendingMoney['amount'] }}">
 
-                                </td>
-                                <td class="border border-slate-600 px-3">
+                                    </td>
+                                    <td class="border border-slate-600 px-3">
 
                                         <input type="hidden" name="id" value="{{ $pendingMoney['id'] }}">
-                                        <button type="submit" class="btn btn-sm btn-dark bg-slate-600 mb-2">Sent</button>
-                                    </form>
+                                        <button type="submit"
+                                            class="btn btn-sm btn-dark bg-slate-600 mb-2">Sent</button>
+                                </form>
                                 </td>
                             </tr>
                         @endforeach
@@ -153,5 +165,3 @@
         </div>
     </div>
 </div>
-
-

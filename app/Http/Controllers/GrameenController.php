@@ -9,7 +9,8 @@ class GrameenController extends Controller
 {
     public function index()
     {
-        $grameen = Grameen::all();
+        $grameen = Grameen::all()
+            ->sortByDesc('id');
 
         return view('telecom.grameen', compact('grameen'));
 
@@ -43,5 +44,19 @@ class GrameenController extends Controller
             return redirect()->back()->with('error', $message);
         }
 
+    }
+
+    public function delete(Request $request)
+    {
+        $grameen = Grameen::find($request->id);
+
+        if ($grameen) {
+            $grameen->delete();
+            $message = "GrameenPhone pack deleted successfully";
+            return redirect()->back()->with('success', $message);
+        } else {
+            $message = "GrameenPhone pack not found or deletion failed";
+            return redirect()->back()->with('error', $message);
+        }
     }
 }

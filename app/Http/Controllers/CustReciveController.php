@@ -16,6 +16,7 @@ class CustReciveController extends Controller
 
         $combinedInfos = CustReceive::with(['user', 'agent'])
         ->where('status', 'Approved')
+        ->orderByDesc('id')
         ->get()->map(function ($item) {
             return [
                 'cust_name' => $item->user->name,
@@ -44,6 +45,7 @@ class CustReciveController extends Controller
 
         $combinedInfos = CustReceive::with('user')->where('agent_id', auth()->user()->id)
         ->where('status', 'Approved')
+        ->orderByDesc('id')
         ->get()->map(function ($item) {
             return [
                 'cust_name' => $item->user->name,
@@ -60,6 +62,7 @@ class CustReciveController extends Controller
 
         $pendingMoneys = CustReceive::with('user')->where('status', 'Pending')
         ->where('agent_id', auth()->user()->id)
+        ->orderByDesc('id')
         ->get()->map(function ($item) {
             return [
                 'id'=> $item->id,
@@ -86,6 +89,7 @@ class CustReciveController extends Controller
         $combinedInfos = CustReceive::with(['user', 'agent'])
         ->where('cust_id', auth()->user()->id)
         ->where('status', 'Approved')
+        ->orderByDesc('id')
         ->get()
         ->map(function ($item) {
             return [
@@ -102,8 +106,10 @@ class CustReciveController extends Controller
 
         $sent = CustSents::where('cust_id', auth()->user()->id)->sum('amount');
 
+        // last order show in top
         $pendingMoneys = CustReceive::with('user')->where('status', 'Pending')
         ->where('cust_id', auth()->user()->id)
+        ->orderByDesc('id')
         ->get()->map(function ($item) {
             return [
                 'id'=> $item->id,

@@ -12,7 +12,7 @@
                 <x-input-error :messages="$errors->get('otp')" class="mt-2" />
             </div>
 
-            <div class="flex items-center justify-between">
+            <div class="flex items-center justify-end">
                 <button type="submit" class="bg-blue-500 text-white font-semibold px-4 py-2 rounded focus:outline-none focus:shadow-outline hover:bg-blue-600">Verify OTP</button>
             </div>
         </form>
