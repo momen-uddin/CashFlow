@@ -49,4 +49,14 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    public function custReceive()
+    {
+        return $this->hasMany(CustReceive::class, 'cust_id', 'id');
+    }
+
+    public function custSents()
+    {
+        return $this->hasMany(CustSents::class, 'cust_id', 'id');
+    }
+
 }

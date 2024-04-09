@@ -64,7 +64,7 @@ Route::middleware(['auth', 'admin'])->prefix("admin/")->group(function () {
 
     Route::post('register', [RegisteredUserController::class, 'store'])->name('register');
 
-    Route::post('customer/update', [RegisteredUserController::class, 'store'])->name('customer.update');
+    Route::post('customer/update', [CustomerController::class, 'update'])->name('customer.update');
 
     Route::get('customer', [CustomerController::class, 'showAll'])
     ->name('customers');

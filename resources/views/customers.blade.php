@@ -11,54 +11,88 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 auto-cols-auto flex-row justify-items-start justify-between ">
                     <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-sm bg-secondary bg-slate-600 mb-2" data-bs-toggle="modal" data-bs-target="#user">
+                    <button type="button" class="btn btn-sm btn-dark bg-slate-800 mb-2" data-bs-toggle="modal"
+                        data-bs-target="#user">
                         Add Customer
                     </button>
 
-
-                    @if(session('success'))
-                        <div class="alert alert-success">
-                            {{ session('success') }}
-                        </div>
-                    @endif
-
-                    <table class="table-auto border-separate border border-slate-500 " id="userTable">
+                    <table class="table table-striped table-secondary" id="dataTable">
                         <thead>
                             <tr>
-                                <th class="border border-slate-600 px-3">#</th>
+                                <th>#</th>
 
-                                <th class="border border-slate-600 px-3">Name</th>
-                                <th class="border border-slate-600 px-3">Number</th>
-                                <th class="border border-slate-600 px-3">E-mail</th>
-                                {{-- <th class="border border-slate-600 px-3">Amount</th> --}}
+                                <th>Name</th>
+                                <th>Number</th>
+                                <th>E-mail</th>
+                                <th>Total Receive</th>
+                                <th>Total Sends</th>
+                                <th>Action</th>
 
                             </tr>
 
                         </thead>
                         <tbody>
                             @php
-                                $totalMoney = 0;
+                                $totalSMoney = 0;
+                                $totalRMoney = 0;
                                 $sn = 0;
                             @endphp
-                            @foreach ($infos as $info)
+                            @foreach ($combinedInfos as $info)
                                 <tr>
-                                    <td class="border border-slate-600 px-3">{{ ++$sn }}</td>
+                                    <form action="{{ route('customer.update') }}" method="POST">
+                                        @csrf
+                                        <td>{{ ++$sn }}</td>
 
-                                    <td class="border border-slate-600 px-3">{{ $info['name'] }}</td>
-                                    <td class="border border-slate-600 px-3">{{ $info['number'] }}</td>
-                                    <td class="border border-slate-600 px-3">{{ $info['email'] }}</td>
-                                    {{-- <td
-                                        class="border border-slate-600 px-3">
-                                        {{ $info['total_money'] }} Taka</td>
+                                        <td>
+
+                                            <input type="text" class="form-control border-0"
+                                                value="{{ $info['custName'] }}" name="name">
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control max-w-40 border-0"
+                                                value="{{ $info['number'] }}" name="number">
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control border-0"
+                                                value="{{ $info['email'] }}" name="email">
+                                        </td>
+                                        <td>
+                                            {{ $info['total_received_money'] }} Taka</td>
+                                        <td>
+                                            {{ $info['total_sent_money'] }} Taka</td>
+
+                                        <td>
+                                            <input type="hidden" name="id" value="{{ $info['cust_id'] }}">
+                                            <button type="submit"
+                                                class="btn btn-sm btn-dark bg-slate-600 mb-2"
+                                                onclick="return confirm('Are you sure you want to update?')"
+                                                >Update</button>
+                                        </td>
+                                    </form>
                                     @php
-                                        $totalMoney += $info['total_money'];
-                                    @endphp --}}
+                                        $totalRMoney += $info['total_received_money'];
+                                    @endphp
+                                    @php
+                                        $totalSMoney += $info['total_sent_money'];
+                                    @endphp
 
                                 </tr>
                             @endforeach
 
 
                         </tbody>
+                        <tr>
+                            <td colspan="4" style="text-align: right;">Grand
+                                total</td>
+                            <td
+                             {{ $totalRMoney < 0 ? 'bg-red-300' : '' }}">
+                                {{ $totalRMoney }} Taka
+                            </td>
+                            <td
+                             {{ $totalSMoney < 0 ? 'bg-red-300' : '' }}">
+                                {{ $totalSMoney }} Taka
+                            </td>
+                        </tr>
                     </table>
                     {{-- {{$infos}} --}}
                 </div>
@@ -76,7 +110,6 @@
                     ]
                 });
             });
-
         </script>
     </x-slot>
 
@@ -97,14 +130,16 @@
                 <option value="Admin">Admin</option>
                 <option value="Agent" selected>Agent</option>
             </select> --}}
-            <x-text-input id="role" class="block mt-1 w-full" readonly type="text" name="role" value="Customer" required autofocus autocomplete="role" />
+            <x-text-input id="role" class="block mt-1 w-full" readonly type="text" name="role"
+                value="Customer" required autofocus autocomplete="role" />
 
         </div>
 
         <!-- Name -->
         <div>
             <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
+            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')"
+                required autofocus autocomplete="name" />
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
 
@@ -112,14 +147,16 @@
         <!-- Numberr -->
         <div class="mt-4">
             <x-input-label for="number" :value="__('Number')" />
-            <x-text-input id="number" class="block mt-1 w-full" type="text" name="number" :value="old('number')" required autocomplete="number" />
+            <x-text-input id="number" class="block mt-1 w-full" type="text" name="number" :value="old('number')"
+                required autocomplete="number" />
             <x-input-error :messages="$errors->get('number')" class="mt-2" />
         </div>
 
         <!-- Email Address -->
         <div class="mt-4">
             <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
+            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')"
+                required autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
@@ -127,10 +164,8 @@
         <div class="mt-4">
             <x-input-label for="password" :value="__('Password')" />
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
+            <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required
+                autocomplete="new-password" />
 
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
@@ -139,9 +174,8 @@
         <div class="mt-4">
             <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
 
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
+            <x-text-input id="password_confirmation" class="block mt-1 w-full" type="password"
+                name="password_confirmation" required autocomplete="new-password" />
 
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
@@ -153,4 +187,3 @@
         </div>
     </form>
 </x-i_modal>
-

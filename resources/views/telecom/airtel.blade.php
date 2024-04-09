@@ -42,7 +42,9 @@
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit"
-                                                class="btn btn-sm btn-dark bg-slate-600">Delete</button>
+                                                class="btn btn-sm btn-dark bg-slate-600"
+                                                onclick="return confirm('Are you sure?');"
+                                                >Delete</button>
                                         </form>
                                     </td>
                                 </tr>
@@ -91,11 +93,18 @@
             <x-text-input id="price" class="block mt-1 w-full" type="number" name="price" min="0"
                 :value="old('price')" required autofocus />
         </div>
+
         <div class="mt-2">
             <x-input-label for="validity" value="Validity [ 0 for Unlimited ]" />
             <x-text-input id="validity" class="block mt-1 w-full" type="number" min="0" name="validity"
                 :value="old('validity')" required autofocus />
         </div>
+
+        {{-- <x-select name="status" class="block mt-1 w-full" >
+            <option value="Active">Active</option>
+            <option value="Inactive">Inactive</option>
+        </x-select> --}}
+
         <div class="mt-2">
             <input type="submit" value="Insert"
                 class="btn btn-sm bg-[#bc569f] hover:bg-[#ff0000] mt-1 mb-1 float-end text-light">

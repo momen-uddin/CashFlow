@@ -25,17 +25,17 @@
                             class="fa-regular fa-file-excel"></i>&nbspExport</a>
 
 
-                    <table class="table table-striped " id="agentTable">
+                    <table class="table table-striped table-secondary" id="dataTable">
                         <thead>
                             <tr>
-                                <th class="border border-slate-600 px-1">#</th>
-                                <th class="border border-slate-600 px-1">Agent ID</th>
-                                <th class="border border-slate-600 px-1">Name</th>
-                                <th class="border border-slate-600 px-1">Number</th>
-                                <th class="border border-slate-600 px-1">E-mail</th>
-                                <th class="border border-slate-600 px-1">Amount</th>
-                                <th class="border border-slate-600 px-1">Transections</th>
-                                <th class="border border-slate-600 px-1">Action</th>
+                                <th>#</th>
+                                <th>Agent ID</th>
+                                <th>Name</th>
+                                <th>Number</th>
+                                <th>E-mail</th>
+                                <th>Amount</th>
+                                <th>Transections</th>
+                                <th>Action</th>
 
                             </tr>
 
@@ -50,36 +50,41 @@
                                 <tr>
                                     <form action="{{ route('agent.update') }}" method="POST">
                                         @csrf
-                                        <td class="border border-slate-600 px-1">{{ ++$sn }}</td>
-                                        <td class="border border-slate-600 px-1">{{ $info['agent_id'] }}</td>
-                                        <td class="border border-slate-600 px-1">
+                                        <td>{{ ++$sn }}</td>
+                                        <td>{{ $info['agent_id'] }}</td>
+                                        <td>
                                             <input type="text" class="form-control border-0"
                                                 value="{{ $info['agent'] }}" name="name">
                                         </td>
-                                        <td class="border border-slate-600 px-1">
-                                            <input type="text" class="form-control border-0"
+                                        <td>
+                                            <input type="text" class="form-control max-w-40 border-0"
                                                 value="{{ $info['number'] }}" name="number">
                                         </td>
-                                        <td class="border border-slate-600 px-1">
+                                        <td>
                                             <input type="text" class="form-control border-0"
                                                 value="{{ $info['email'] }}" name="email">
                                         </td>
-                                        <td class="border border-slate-600 px-1">
+                                        <td>
                                             {{ $info['total_money'] }} Taka
                                         </td>
-                                        <td class="border border-slate-600 px-1">
+                                        <td>
                                             <button type="button" class="btn btn-sm btn-dark bg-slate-800 mb-2"
                                                 data-bs-toggle="modal" data-bs-target="#agentTrans" id="trans">
                                                 Transections
                                             </button>
                                         </td>
-                                        <td class="border border-slate-600 px-1">
+                                        <td>
                                             <input type="hidden" name="id" value="{{ $info['agent_id'] }}">
                                             <button type="submit"
-                                                class="btn btn-sm btn-dark bg-slate-600 mb-2">Update</button>
+                                                class="btn btn-sm btn-dark bg-slate-600 mb-2"
+                                                onclick="return confirm('Are you sure you want to update?')"
+                                                >Update</button>
                                         </td>
                                     </form>
                                 </tr>
+                                @php
+                                    $totalMoney += $info['total_money'];
+                                @endphp
                             @endforeach
 
 
@@ -91,10 +96,10 @@
                             <td></td>
                             <td></td> --}}
 
-                            <td colspan="5" class="border border-slate-600 px-1" style="text-align: right;">Grand
+                            <td colspan="5" style="text-align: right;">Grand
                                 total</td>
                             <td colspan="3"
-                                class="border border-slate-600 px-1
+
                              {{ $totalMoney < 0 ? 'bg-red-300' : '' }}">
                                 {{ $totalMoney }} Taka</td>
                         </tr>
@@ -119,13 +124,13 @@
                     <table class="table-auto border-separate border border-slate-500 ">
                         <thead>
                             <tr>
-                                <th class="border border-slate-600 px-1">#</th>
-                                <th class="border border-slate-600 px-1">Date</th>
-                                <th class="border border-slate-600 px-1">Number</th>
-                                <th class="border border-slate-600 px-1">Transection Type</th>
-                                <th class="border border-slate-600 px-1">Transection ID</th>
-                                <th class="border border-slate-600 px-1">Amount</th>
-                                <th class="border border-slate-600 px-1">Rate</th>
+                                <th>#</th>
+                                <th>Date</th>
+                                <th>Number</th>
+                                <th>Transection Type</th>
+                                <th>Transection ID</th>
+                                <th>Amount</th>
+                                <th>Rate</th>
 
                             </tr>
 
@@ -168,19 +173,19 @@
                             // Iterate over each transaction in the response and append to the table
                             $.each(response, function(index, transaction) {
                                 modalBody.append('<tr>' +
-                                    '<td class="border border-slate-600 px-1">' + (
+                                    '<td>' + (
                                         index + 1) + '</td>' +
-                                    '<td class="border border-slate-600 px-1">' +
+                                    '<td>' +
                                     transaction.tansDate + '</td>' +
-                                    '<td class="border border-slate-600 px-1">' +
+                                    '<td>' +
                                     transaction.user.number + '</td>' +
-                                    '<td class="border border-slate-600 px-1">' +
+                                    '<td>' +
                                     transaction.transaction_type + '</td>' +
-                                    '<td class="border border-slate-600 px-1">' +
+                                    '<td>' +
                                     transaction.transaction_id + '</td>' +
-                                    '<td class="border border-slate-600 px-1">' +
+                                    '<td>' +
                                     transaction.amount + '</td>' +
-                                    '<td class="border border-slate-600 px-1">' +
+                                    '<td>' +
                                     transaction.rate + '</td>' +
                                     '</tr>');
                                 $('#agentTransLabel').text(transaction.user.name);

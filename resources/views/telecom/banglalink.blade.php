@@ -43,7 +43,9 @@
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit"
-                                                class="btn btn-sm btn-dark bg-slate-600">Delete</button>
+                                                class="btn btn-sm btn-dark bg-slate-600"
+                                                onclick="return confirm('Are you sure?');"
+                                                >Delete</button>
                                         </form>
                                     </td>
                                 </tr>
