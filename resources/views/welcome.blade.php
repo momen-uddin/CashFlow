@@ -931,7 +931,7 @@
                     @if (Route::has('login'))
                         <nav class="-mx-3 flex flex-1 justify-end">
                             @auth
-                                @if (Auth::user()->role === 'Admin')
+                                @if (Auth::user()->role === 'Admin' || Auth::user()->role === 'Master Admin')
                                     <a href="{{ route('admin.dashboard') }}"
                                         class="rounded-md px-3 py-2 ring-1 ring-transparent transition ">
                                         Dashboard
@@ -941,7 +941,7 @@
                                         class="rounded-md px-3 py-2 ring-1 ring-transparent transition ">
                                         Dashboard
                                     </a>
-                                @elseif (Auth::user()->role === 'User')
+                                @elseif (Auth::user()->role === 'Customer')
                                     <a href="{{ route('customer.dashboard') }}"
                                         class="rounded-md px-3 py-2 ring-1 ring-transparent transition ">
                                         Dashboard

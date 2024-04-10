@@ -2,12 +2,9 @@
     <x-slot name="header">
         <div class=" d-flex align-items-center ">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight flex-grow-1">
-                {{ __('Money Received') }}
+                {{ __('Money Send') }}
             </h2>
-            <button type="button" class="btn btn-sm btn-dark bg-slate-600 mb-2 mr-2" data-bs-toggle="modal"
-                data-bs-target="#pendingMoney">
-                Pending Request
-            </button>
+
             <button type="button" class="btn btn-sm btn-dark bg-slate-600 mb-2" data-bs-toggle="modal"
                 data-bs-target="#rm">
                 Request for Money
@@ -27,14 +24,13 @@
                         </div>
                     @endif
 
-                    <table class="table-auto border-separate border border-slate-500 ">
+                    <table class="table-auto border-separate border border-slate-500 " id="dataTable">
                         <thead>
                             <tr>
                                 <th class="border border-slate-600 px-3">#</th>
                                 <th class="border border-slate-600 px-3">Date</th>
                                 <th class="border border-slate-600 px-3">Customer Name</th>
                                 <th class="border border-slate-600 px-3">Customer Number</th>
-                                <th class="border border-slate-600 px-3">Agent Name</th>
                                 <th class="border border-slate-600 px-3">Transection Type</th>
                                 <th class="border border-slate-600 px-3">Transection ID</th>
                                 <th class="border border-slate-600 px-3">Amount</th>
@@ -53,46 +49,31 @@
                                     <td class="border border-slate-600 px-3">{{ custom_date($info['transDate']) }}</td>
                                     <td class="border border-slate-600 px-3">{{ $info['cust_name'] }}</td>
                                     <td class="border border-slate-600 px-3">{{ $info['cust_number'] }}</td>
-                                    <td class="border border-slate-600 px-3">{{ $info['agent_name'] }}</td>
+
                                     <td class="border border-slate-600 px-3">{{ $info['trans_type'] }}</td>
                                     <td class="border border-slate-600 px-3">{{ $info['trans_id'] }}</td>
 
                                     <td class="border border-slate-600 px-3">
                                         {{ $info['amount'] }} Taka</td>
+
+
                                     @php
                                         $totalMoney += $info['amount'];
                                     @endphp
 
                                 </tr>
                             @endforeach
-                            <tr>
-                                <td colspan="7" class="border border-slate-600 px-3" style="text-align: right;">
-                                    Total Receive</td>
-                                <td
-                                    class="border border-slate-600 px-3
-                                 {{ $totalMoney <= 0 ? 'bg-red-300' : '' }}">
-                                    {{ $totalMoney }} Taka</td>
-                            </tr>
-                            <tr>
-                                <td colspan="7" class="border border-slate-600 px-3" style="text-align: right;">Total
-                                    Send
-                                </td>
-                                <td
-                                    class="border border-slate-600 px-3
-                                 {{ $sent <= 0 ? 'bg-red-300' : '' }}">
-                                    {{ $sent }} Taka</td>
-                            </tr>
-                            <tr>
-                                <td colspan="7" class="border border-slate-600 px-3" style="text-align: right;">Net
-                                    Amount
-                                </td>
-                                <td
-                                    class="border border-slate-600 px-3
-                                 {{ $sent - $totalMoney <= 0 ? 'bg-red-300' : '' }}">
-                                    {{ $sent - $totalMoney }} Taka</td>
-                            </tr>
 
                         </tbody>
+                        <tr>
+                            <td colspan="6" class="border border-slate-600 px-3" style="text-align: right;">
+                                Total Send </td>
+                            <td
+                                class="border border-slate-600 px-3
+                             {{ $totalMoney <= 0 ? 'bg-red-300' : '' }}">
+                                {{ $totalMoney }} Taka</td>
+
+                        </tr>
                     </table>
                     {{-- {{$infos}} --}}
                 </div>
@@ -150,61 +131,4 @@
     </div>
 </div>
 
-{{-- Pending Money --}}
 
-<div class="modal fade modal-lg" id="pendingMoney" tabindex="-1" aria-labelledby="pendingMoneyLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="pendingMoneyLabel">Pending Request</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <table class="table-auto border-separate border border-slate-500 ">
-                    <thead>
-                        <tr>
-                            <th class="border border-slate-600 px-3">#</th>
-                            <th class="border border-slate-600 px-3">Date</th>
-                            <th class="border border-slate-600 px-3">Customer Name</th>
-                            <th class="border border-slate-600 px-3">Customer Number</th>
-                            <th class="border border-slate-600 px-3">Amount</th>
-                            <th class="border border-slate-600 px-3">Action</th>
-                        </tr>
-
-                    </thead>
-                    <tbody>
-                        @php
-                            $sn = 0;
-                        @endphp
-                        @foreach ($pendingMoneys as $pendingMoney)
-                            <tr>
-                                <form action="{{ route('updateMoney') }}" method="POST">
-                                    @csrf
-
-                                <td class="border border-slate-600 px-3">{{ ++$sn }}</td>
-                                <td class="border border-slate-600 px-3">{{ custom_date($pendingMoney['transDate']) }}</td>
-                                <td class="border border-slate-600 px-3">{{ $pendingMoney['cust_name'] }}</td>
-
-                                <td class="border border-slate-600 px-3">
-                                    <input type="text" class="border-0 p-0 w-100" name="cust_number" value="{{ $pendingMoney['cust_number'] }}">
-                                </td>
-
-                                <td class="border border-slate-600 px-3">
-
-                                    <input type="text" class="border-0 p-0 w-100" name="amount" value="{{ $pendingMoney['amount'] }}">
-
-                                </td>
-                                <td class="border border-slate-600 px-3">
-
-                                        <input type="hidden" name="id" value="{{ $pendingMoney['id'] }}">
-                                        <button type="submit" class="btn btn-sm btn-dark bg-slate-600 mb-2">Update</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>

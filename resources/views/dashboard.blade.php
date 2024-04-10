@@ -31,7 +31,7 @@
                                 title="">
                         </div>
                         <div class="card-body">
-                            <h5 class="card-title text-slate-300">Sent to Customer</h5>
+                            <h5 class="card-title text-slate-300">Send to Customer</h5>
                             <p class="card-text text-slate-50 float-end">{{ number_format($CustSent, 0, '.', ',') }} Bdt
                             </p>
 

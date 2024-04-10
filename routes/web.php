@@ -127,6 +127,8 @@ Route::middleware(['auth', 'agent'])->prefix("agent/")->group(function () {
 Route::middleware(['auth', 'customer'])->group(function () {
 
     Route::get('dashboard', [CustomerController::class, 'index'])->name('customer.dashboard');
+    Route::get('moneySend', [CustSentController::class, 'custShow'])->name('customer.moneySend');
+
     Route::get('moneyCollect', [CustReciveController::class, 'custShow'])->name('customer.moneyCollection');
     Route::post('moneyCollect', [CustReciveController::class, 'requestMoney'])->name('requestMoney');
     Route::post('moneyCollect/update', [CustReciveController::class, 'updateMoney'])->name('updateMoney');

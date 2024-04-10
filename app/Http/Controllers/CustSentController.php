@@ -30,6 +30,29 @@ class CustSentController extends Controller
         return view('moneyCollect', compact('combinedInfos'));
 
     }
+    public function custShow()
+    {
+        $combinedInfos = CustSents::with(['user'])
+        ->orderByDesc('id')
+        ->get()->map(function ($item) {
+            return [
+                'cust_name' => $item->user->name,
+                'cust_number' => $item->user->number,
+                'trans_type' => $item->transaction_type,
+                'trans_id' => $item->transaction_id,
+                'amount' => $item->amount,
+
+                'transDate' => $item->transDate,
+                'rate' => $item->rate,
+                // Add other fields from CustReceive model if needed
+            ];
+        });
+
+
+        // Pass the combined information to the view
+        return view('customer.moneySend', compact('combinedInfos'));
+
+    }
 
     public function store(Request $request)
     {

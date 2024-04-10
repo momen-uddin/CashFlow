@@ -11,9 +11,10 @@ class CustomerLayout extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public $script;
+    public function __construct($script = null)
     {
-        //
+        $this->script = $script;
     }
 
     /**
