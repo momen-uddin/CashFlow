@@ -57,6 +57,3 @@ This project is open-source and available under the [MIT License](LICENSE).
 
 For any inquiries, please reach out to [momen-uddin](https://github.com/momen-uddin).
 
----
-
-This `README.md` provides a clear and professional overview of the CashFlow project, including installation instructions, features, and contribution guidelines.
